@@ -15,3 +15,23 @@ export const searchMovies = async (query: string) => {
     }
     return data.Search || [];
 };
+
+export const getMovieDetails = async (imdbID: string) => {
+    try {
+        const response = await fetch(
+            `${BASE_URL}?i=${imdbID}&apikey=${API_KEY}`
+        );
+        const data = await response.json();
+
+        if (data.Response === "False") {
+            console.error(data.Error);
+            return null;
+        }
+
+        return data;
+    } catch (error) {
+        console.error("Error fetching movie details:", error);
+        return null;
+    }
+};
+

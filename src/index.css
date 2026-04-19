@@ -1,7 +1,8 @@
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
-  background-color: #f5f5f5;
+  font-family: 'Poppins', sans-serif;
+  background: radial-gradient(circle at top, #0a0f2c, #050816);
+  color: #f5f5f5;
 }
 
 h1 {

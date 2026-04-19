@@ -1,49 +1,91 @@
 .app {
   text-align: center;
-  padding: 40px 20px;
+  padding: 30px;
 }
 
+/* TITLE */
 .title {
+  font-weight: 800;
+  font-size: 48px;
+  color: gold;
   margin-bottom: 20px;
 }
 
+/* SEARCH */
 .search-container {
+  display: flex;
+  justify-content: center;
   margin-bottom: 30px;
 }
 
 .search-input {
-  padding: 10px;
-  width: 250px;
-  font-size: 16px;
+  padding: 12px;
+  width: 300px;
+  border-radius: 6px;
+  border: none;
 }
 
 .search-button {
-  padding: 10px 15px;
+  padding: 12px 18px;
   margin-left: 10px;
-  font-size: 16px;
+  background: #8b0000;
+  color: white;
+  border: none;
   cursor: pointer;
 }
 
+/* GRID */
 .movie-grid {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 20px;
-  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 25px;
+  justify-items: center;
 }
 
+/* CARD */
 .movie-card {
-  width: 180px;
-  background: white;
+  background: #111;
   padding: 10px;
   border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s;
 }
 
-.movie-poster {
-  width: 100%;
-  height: 270px;
-  object-fit: cover;
-  border-radius: 6px;
+.movie-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+}
+
+/* MODAL (centered with blur) */
+.details-panel {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #1a1a2e;
+  padding: 25px;
+  width: 400px;
+  border-radius: 12px;
+  z-index: 1000;
+  box-shadow: 0 0 30px rgba(0,0,0,0.8);
+}
+
+/* BACKDROP BLUR */
+.details-panel::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  backdrop-filter: blur(6px);
+  z-index: -1;
+}
+
+/* CLOSE BUTTON */
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
 }

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import SearchBar from "./components/SearchBar";
-import { searchMovies } from "./api";
+import MovieCard from "./components/MovieCard";
+import { searchMovies } from "./components/services/api";
 import './App.css'
 
 const App: React.FC = () => {
@@ -22,10 +23,11 @@ const App: React.FC = () => {
 
       <SearchBar onSearch={handleSearch} />
 
-      {/* temporary display of search results */}
-      <pre style={{ textAlign: "left"}}>
-        {JSON.stringify(movies, null, 2)}
-        </pre>
+      <pre className="movie-grid">
+        {movies.map((movie, index) => (
+          <MovieCard key={index} movie={movie} />
+        ))}
+      </pre>
     </div>
   )
 }

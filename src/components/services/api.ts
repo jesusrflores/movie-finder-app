@@ -1,5 +1,5 @@
 const API_KEY = "d6427cec"; 
-const BASE_URL = "http://www.omdbapi.com/";
+const BASE_URL = "https://www.omdbapi.com/";
 
 export const searchMovies = async (query: string) => {
     const response = await fetch(
@@ -10,8 +10,8 @@ export const searchMovies = async (query: string) => {
 
     //OMDb API returns a property "Search" which contains the array of movies
     if (data.Response === "False") {
+        console.error("OMDb Error:", data.Error);
         return [];
     }
-
-    return data.Search;
+    return data.Search || [];
 };

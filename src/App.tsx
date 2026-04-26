@@ -70,7 +70,23 @@ const App: React.FC = () => {
 
             <p><strong>Genre:</strong> {movieDetails.Genre}</p>
             <p><strong>Plot:</strong> {movieDetails.Plot}</p>
-            <p><strong>IMDB Rating:</strong> {renderStars(movieDetails.imdbRating)}</p>
+            <p><strong>IMDB Rating:</strong>{" "} 
+                {movieDetails.imdbRating !== "N/A" 
+                ? renderStars(movieDetails.imdbRating) 
+                : "No rating available"}
+                </p>
+            <div className="modal-actions">
+              <a 
+                className="trailer-button"
+                href={`https://www.youtube.com/results?search_query=${encodeURIComponent(
+                  movieDetails.Title + " " + movieDetails.Year + " official trailer"
+                )}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Watch Trailer
+              </a>
+            </div>
           </div>
         </div>
       )}

@@ -32,9 +32,11 @@ const App: React.FC = () => {
 
   return (
     <div className="App">
-      <h1 className="title">Movie Finder</h1>
-
-      <SearchBar onSearch={handleSearch} />
+      <header className="app-header">
+        <h1 className="title">Movie Finder</h1>
+        <SearchBar onSearch={handleSearch} />
+      </header>
+      
 
       <div className="movie-grid">
       {movies.map((movie) => (
@@ -49,34 +51,29 @@ const App: React.FC = () => {
         
       </div>
       {movieDetails && (
-  <div className="modal-backdrop" onClick={() => setMovieDetails(null)}>
-    <div className="details-panel" onClick={(e) => e.stopPropagation()}>
-      <button
-        className="close-btn"
-        onClick={() => setMovieDetails(null)}
-      >
-        ×
-      </button>
+        <div className="modal-backdrop" onClick={() => setMovieDetails(null)}>
+          <div className="details-panel" onClick={(e) => e.stopPropagation()}>
+            <button
+              className="close-btn"
+              onClick={() => setMovieDetails(null)}
+            >
+              ×
+            </button>
 
-      <h2>{movieDetails.Title}</h2>
+            <h2>{movieDetails.Title}</h2>
 
-      <img src={movieDetails.Poster} alt={movieDetails.Title} />
+            <img
+              className="details-poster"
+              src={movieDetails.Poster}
+              alt={movieDetails.Title}
+            />
 
-      <p><strong>Genre:</strong> {movieDetails.Genre}</p>
-      <p><strong>Plot:</strong> {movieDetails.Plot}</p>
-      <p><strong>IMDB Rating:</strong> {renderStars(movieDetails.imdbRating)}</p>
-
-      <iframe
-        width="100%"
-        height="200"
-        src={`https://www.youtube.com/embed?listType=search&list=${encodeURIComponent(
-          movieDetails.Title + " trailer"
-        )}`}
-        title="Trailer"
-      />
-      </div>
-      </div>
-    )}
+            <p><strong>Genre:</strong> {movieDetails.Genre}</p>
+            <p><strong>Plot:</strong> {movieDetails.Plot}</p>
+            <p><strong>IMDB Rating:</strong> {renderStars(movieDetails.imdbRating)}</p>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -37,42 +37,46 @@ const App: React.FC = () => {
       <SearchBar onSearch={handleSearch} />
 
       <div className="movie-grid">
-        {movies.map((movie, index) => (
-          
-          <div
-          key={index}
-          onClick={() => handleSelectMovie(movie)}>
-              <MovieCard movie={movie} />
-            </div>
-
-        ))}
+      {movies.map((movie) => (
+        <button
+          key={movie.imdbID}
+          className="movie-card-button"
+          onClick={() => handleSelectMovie(movie)}
+        >
+          <MovieCard movie={movie} />
+        </button>
+      ))}
         
       </div>
       {movieDetails && (
-        <div className="details-panel">
-          <button 
-            className="close-btn"
-            onClick={() => setMovieDetails(null)}>
-            X
-          </button>
+  <div className="modal-backdrop" onClick={() => setMovieDetails(null)}>
+    <div className="details-panel" onClick={(e) => e.stopPropagation()}>
+      <button
+        className="close-btn"
+        onClick={() => setMovieDetails(null)}
+      >
+        ×
+      </button>
 
-          <h2>{movieDetails.Title}</h2>
-          <img
-            src={movieDetails.Poster}
-            alt={movieDetails.Title}
-            />
-            <p><strong>Genre:</strong> {movieDetails.Genre}</p>
-            <p><strong>Plot:</strong> {movieDetails.Plot}</p>
-            <p><strong>IMDB Rating:</strong> {renderStars(movieDetails.imdbRating)}</p>
+      <h2>{movieDetails.Title}</h2>
 
-            <iframe
-              width="100%"
-              height="200"
-              src={`https://www.youtube.com/embed?listType=search&list=${encodeURIComponent(movieDetails.Title + " trailer")}`}
-              title="Trailer"
-              />
-        </div>
-       )}
+      <img src={movieDetails.Poster} alt={movieDetails.Title} />
+
+      <p><strong>Genre:</strong> {movieDetails.Genre}</p>
+      <p><strong>Plot:</strong> {movieDetails.Plot}</p>
+      <p><strong>IMDB Rating:</strong> {renderStars(movieDetails.imdbRating)}</p>
+
+      <iframe
+        width="100%"
+        height="200"
+        src={`https://www.youtube.com/embed?listType=search&list=${encodeURIComponent(
+          movieDetails.Title + " trailer"
+        )}`}
+        title="Trailer"
+      />
+      </div>
+      </div>
+    )}
     </div>
   );
 };

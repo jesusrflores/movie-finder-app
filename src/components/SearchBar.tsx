@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "../App.css";
 
 type Props = {
   onSearch: (query: string) => void;
@@ -10,25 +9,25 @@ const SearchBar: React.FC<Props> = ({ onSearch }) => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!query) return;
+    if (!query.trim()) return;
 
     onSearch(query);
   };
 
   return (
-      <form onSubmit={handleSubmit}>
-        <input
+    <form className="search-container" onSubmit={handleSubmit}>
+      <input
         className="search-input"
-          type="text"
-          placeholder="Search for a movie..."
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-        />
-        <button type="submit" className="search-button">
-          Search
-        </button>
-      </form>
-    
+        type="text"
+        placeholder="Search for a movie..."
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+      />
+
+      <button type="submit" className="search-button">
+        Search
+      </button>
+    </form>
   );
 };
 

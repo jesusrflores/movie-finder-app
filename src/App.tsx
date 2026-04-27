@@ -1,13 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import SearchBar from "./components/SearchBar";
 import MovieCard from "./components/MovieCard";
 import { searchMovies } from "./components/services/api";
 import { getMovieDetails } from "./components/services/api";
+import { Routes, Route, Link } from "react-router-dom";
+import Favorites from "./pages/Favorites";
 import './App.css'
 
 const App: React.FC = () => {
   const [movies, setMovies] = useState<any[]>([]);
   const [movieDetails, setMovieDetails] = useState<any | null>(null);
+  const [favorites, setFavorites] = useState<any[]>([]);
+
+  useEffect(() => {
+  const stored = JSON.parse(localStorage.getItem("favorites") || "[]");
+  setFavorites(stored);
+}, []);
 
   const handleSearch = async (query: string) => {
     console.log("Searching for:", query);
@@ -30,26 +38,62 @@ const App: React.FC = () => {
     return "★".repeat(fullStars);
   };
 
+  const saveFavorite = (movie: any) => {
+  const existing = JSON.parse(localStorage.getItem("favorites") || "[]");
+
+  const alreadySaved = existing.find(
+    (m: any) => m.imdbID === movie.imdbID
+  );
+
+  if (alreadySaved) {
+    alert("Already in favorites!");
+    return;
+  }
+
+  const updated = [...existing, movie];
+
+  localStorage.setItem("favorites", JSON.stringify(updated));
+  setFavorites(updated);
+
+  alert("Added to favorites!");
+  };
+
   return (
     <div className="App">
       <header className="app-header">
         <h1 className="title">Movie Finder</h1>
         <SearchBar onSearch={handleSearch} />
+        <nav className="nav-links">
+          <Link to="/">Search</Link>
+          <Link to="/favorites">Favorites</Link>
+          </nav>
       </header>
       
-
-      <div className="movie-grid">
-      {movies.map((movie) => (
-        <button
-          key={movie.imdbID}
-          className="movie-card-button"
-          onClick={() => handleSelectMovie(movie)}
-        >
-          <MovieCard movie={movie} />
-        </button>
-      ))}
+      <Routes>
+        <Route path="/" element={<div className="movie-grid">
+          {movies.map((movie) => (
+            <button
+              key={movie.imdbID}
+              className="movie-card-button"
+              onClick={() => handleSelectMovie(movie)}
+            >
+            <MovieCard movie={movie} />
+          </button>
+        ))}
         
       </div>
+        } 
+        />
+        <Route 
+        path="/favorites" 
+        element={
+        <Favorites favorites={favorites} 
+        onSelectMovie={handleSelectMovie}
+        />
+      }
+    />
+   </Routes>
+
       {movieDetails && (
         <div className="modal-backdrop" onClick={() => setMovieDetails(null)}>
           <div className="details-panel" onClick={(e) => e.stopPropagation()}>
@@ -87,6 +131,11 @@ const App: React.FC = () => {
                 Watch Trailer
               </a>
             </div>
+            <button
+            className="favorite-button"
+            onClick={() => saveFavorite(movieDetails)}>
+              Add to Favorites
+              </button>
           </div>
         </div>
       )}

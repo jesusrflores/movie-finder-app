@@ -107,6 +107,14 @@
   margin-top: 40px;
 }
 
+.clickable-title {
+  cursor: pointer;
+}
+
+.clickable-title:hover {
+  opacity: 0.85;
+}
+
 /* MOVIE GRID */
 .movie-grid {
   display: grid;

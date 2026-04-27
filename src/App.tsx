@@ -3,14 +3,22 @@ import SearchBar from "./components/SearchBar";
 import MovieCard from "./components/MovieCard";
 import { searchMovies } from "./components/services/api";
 import { getMovieDetails } from "./components/services/api";
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route, Link, useNavigate } from "react-router-dom";
 import Favorites from "./pages/Favorites";
+
 import './App.css'
 
 const App: React.FC = () => {
   const [movies, setMovies] = useState<any[]>([]);
   const [movieDetails, setMovieDetails] = useState<any | null>(null);
   const [favorites, setFavorites] = useState<any[]>([]);
+  const navigate = useNavigate();
+
+  const resetApp = () => {
+  setMovies([]);
+  setMovieDetails(null);
+  navigate("/");
+};
 
   useEffect(() => {
   const stored = JSON.parse(localStorage.getItem("favorites") || "[]");
@@ -61,7 +69,9 @@ const App: React.FC = () => {
   return (
     <div className="App">
       <header className="app-header">
-        <h1 className="title">Movie Finder</h1>
+        <h1 className="title clickable-title" onClick={resetApp}>
+          Movie Finder
+        </h1>
         <SearchBar onSearch={handleSearch} />
         <nav className="nav-links">
           <Link to="/">Search</Link>
